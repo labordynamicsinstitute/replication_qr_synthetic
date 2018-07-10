@@ -1,3 +1,6 @@
 .DS_Store
 *~
 *.bak
+*.Rhistory
+Rpackages
+*.Rout
