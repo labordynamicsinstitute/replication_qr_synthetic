@@ -8,5 +8,5 @@
 source /etc/profile.d/modules.sh
 cd $PBS_O_WORKDIR
 module load R/3.0.2
-R --vanilla < fileMerge.R > fileMerge.Rout
+R --vanilla < 02_fileMerge.R > 02_fileMerge.Rout
 
