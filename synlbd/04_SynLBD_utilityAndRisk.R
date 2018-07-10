@@ -44,7 +44,7 @@ labels=c(178,239,328,354,473,511,542,703,829,865)
 ##Loading in the "true" data
 ##NOte that the "true" data in this case is the synLBD
 ##Note that "longitudinalSynLBD.csv" is just the year-by-year files merged together by SIC code
-df=fread(paste(home.dir,"Data","longitudinalSynLBD.csv",sep="/"),na.strings="NA",integer64="numeric")
+df=fread(paste(mydata,"longitudinalSynLBD.csv",sep="/"),na.strings="NA",integer64="numeric")
 
 
 ##First, calculating utility/risk for CART syntheses

@@ -65,7 +65,7 @@ labels=c(178,239,328,354,473,511,542,703,829,865)
 
 ## Load the SynLBD data
 
-df=fread(paste(home.dir,"Data","longitudinalSynLBD.csv",sep="/"),na.strings="NA",integer64="numeric")
+df=fread(paste(mydata,"longitudinalSynLBD.csv",sep="/"),na.strings="NA",integer64="numeric")
 
 ##Synthesizing 5 times over each of the labels specified above.
 set.seed(2018)

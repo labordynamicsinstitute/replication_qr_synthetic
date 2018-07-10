@@ -236,7 +236,7 @@ data_jitter <- function(data){
 
 
 ##Loading in the synthetic data
-df=fread(paste(home.dir,"Data","longitudinalSynLBD.csv",sep="/"),na.strings="NA",integer64="numeric")
+df=fread(paste(mydata,"longitudinalSynLBD.csv",sep="/"),na.strings="NA",integer64="numeric")
 
 
 ##Labels of interest

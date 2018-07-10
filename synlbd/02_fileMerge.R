@@ -1,26 +1,20 @@
+## Code to make a SynLBD extract 
+##PSD 2018 code for "Synthetic data via Quantile Regression for Heavy-Tailed and Heteroskedastic Data"
+##By Pistner, Slavkovic, and Vilhuber
+
+source("config.R",echo=TRUE)
+
 ##Libraries needed
 library(plyr)
 library(foreign)
-library("data.table",lib="/home/fs01/spec827/Rpackages")
-
-
-##Setting the directories
-base = "/rdcprojects/tr/tr00612"
-version = "2.0.2"
-myid="spec827"
-prefix="synlbd"
-
-
-inputs=paste(base,"/data/synlbd/",version,sep="")
-mydata=paste(base,"/programs/users/",myid,"/data",sep="")
+library("data.table",lib=dir.Rpackages)
 
 ##Now, we want to read in the data and merge the data frames together
-setwd(inputs)
 vars.list=c("lbdnum","sic3","firstyear","lastyear","mu","emp","pay")
 
 ##Now, read in for every year and merge together
 for(i in 1976:2000){
-  read.file=paste("synlbd",i,"c.dta",sep="")
+  read.file=paste(inputs,"/","synlbd",i,"c.dta",sep="")
   df.tmp=read.dta(read.file)
   df.tmp=df.tmp[,vars.list] ##Restrict on variables
   names(df.tmp)[2:length(vars.list)]= paste(vars.list,"_",i,sep="")[2:length(vars.list)]##
@@ -67,4 +61,4 @@ df.main$mu=apply(df.main[,52:76],1,FUN=min,na.rm=TRUE)
 names=c("sic3","firstyear","lastyear","mu",emp,pay)
 df=df.main[,names]
 
-fwrite(df,"longitudinalSynLBD.csv")
+fwrite(df,paste(mydata,"longitudinalSynLBD.csv",sep="/"))
