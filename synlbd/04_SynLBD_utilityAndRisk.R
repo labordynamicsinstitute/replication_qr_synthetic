@@ -2,11 +2,7 @@
 ##PSD 2018 code for "Synthetic data via Quantile Regression for Heavy-Tailed and Heteroskedastic Data"
 ##By Pistner, Slavkovic, and Vilhuber
 
-##Define your userID here
-##This is used in coding paths
-userID="XXX"
-
-dir.Rpackages = paste("/home/fs01/",paste(userID,"/Rpackages",sep=""),sep="")
+source("config.R",echo=TRUE)
 
 ##Loading the required libraries
 ##See https://www2.vrdc.cornell.edu/news/synthetic-data-server/step-4-using-the-sds/ for instructions on how to download R packages
@@ -47,11 +43,8 @@ labels=c(178,239,328,354,473,511,542,703,829,865)
 
 ##Loading in the "true" data
 ##NOte that the "true" data in this case is the synLBD
-##This assumes the .csv file is in the same directory
 ##Note that "longitudinalSynLBD.csv" is just the year-by-year files merged together by SIC code
-home.dir=paste("/home/fs01/",paste(userID,"/QuantileRegression/PSD 2018",sep=""),sep="")
-setwd(home.dir)
-df=fread("longitudinalSynLBD.csv",na.strings="NA",integer64="numeric")
+df=fread(paste(home.dir,"Data","longitudinalSynLBD.csv",sep="/"),na.strings="NA",integer64="numeric")
 
 
 ##First, calculating utility/risk for CART syntheses
@@ -66,9 +59,9 @@ cart.risk=rep(NA,10)
 
 for(i in 1:10){
   for(j in 1:5){
-    dir=paste(home.dir,paste("/Data/CART/CART",j,sep=""),sep="")
-    setwd(dir)
-    file=paste("CART_SynLBD_",paste(labels[i],".csv",sep=""),sep="")
+    dir=paste(home.dir,"/Data/CART/CART",j,sep="")
+    #setwd(dir)
+    file=paste(dir,paste("CART_SynLBD_",labels[i],".csv",sep=""),sep="/")
     syns=fread(file)
     syns=round(syns)
     data=df[which(df$sic3==labels[i]),]
@@ -97,7 +90,7 @@ for(i in 1:10){
 }
 #Writing results
 cart.results = as.data.frame(cbind(labels,cart.ut,cart.ut.sd,cart.risk,cart.risk.sd))
-fwrite(cart.results,"CART_results.csv")
+fwrite(cart.results,paste(results,"CART_results.csv",sep="/"))
 
 
 ##First, calculating utility/risk for QR syntheses
@@ -107,9 +100,9 @@ tmp.ut=rep(NA,5)
 
 for(i in 1:10){
   for(j in 1:5){
-    dir=paste(home.dir,paste("/Data/QR/QR",j,sep=""),sep="")
-    setwd(dir)
-    file=paste("QR_SynLBD_",paste(labels[i],".csv",sep=""),sep="")
+    dir=paste(home.dir,"/Data/QR/QR",j,sep="")
+    #setwd(dir)
+    file=paste(dir,paste("QR_SynLBD_",labels[i],".csv",sep=""),sep="/")
     syns=fread(file)
     syns=round(syns)
     data=df[which(df$sic3==labels[i]),]
@@ -147,7 +140,7 @@ qr.risk.sd
 
 ##Writing results
 qr.results = as.data.frame(cbind(labels,qr.ut,qr.ut.sd,qr.risk,qr.risk.sd))
-fwrite(qr.results,"QR_results.csv")
+fwrite(qr.results,paste(results,"QR_results.csv",sep="/"))
 
 
 

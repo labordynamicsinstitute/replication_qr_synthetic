@@ -13,6 +13,21 @@
 home.dir=getwd()
 setwd(home.dir)
 
+# SynLBD parameters
+base = "/rdcprojects/tr/tr00612"
+version = "2.0.2"
+prefix="synlbd"
+
+# directories
+inputs=paste(base,"/data/synlbd/",version,sep="")
+mydata=paste(home.dir,"Data",sep="/")
+results=paste(home.dir,"results",sep="/")
+
+print("=== Directories ===")
+print(paste("Inputs:",inputs,sep=" "))
+print(paste("Intermediate data:",mydata,sep=" "))
+print(paste("Results:",results,sep=" "))
+
 ## R packages are installed into the project directory at time of first run
 dir.Rpackages = paste(getwd(),"Rpackages",sep="/")
 dir.Rpackages

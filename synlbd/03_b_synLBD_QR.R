@@ -2,10 +2,7 @@
 ##PSD 2018 code for "Synthetic data via Quantile Regression for Heavy-Tailed and Heteroskedastic Data"
 ##By Pistner, Slavkovic, and Vilhuber
 
-##Replace with your user id
-myid="XXX"
-
-dir.Rpackages = paste("/home/fs01/",paste(myid,"/Rpackages",sep=""),sep="")
+source("config.R",echo=TRUE)
 
 ##Loading the required libraries
 ##See https://www2.vrdc.cornell.edu/news/synthetic-data-server/step-4-using-the-sds/ for instructions on how to download R packages
@@ -23,16 +20,6 @@ library("here",lib=dir.Rpackages)
 library(foreach,lib=dir.Rpackages)
 library(doParallel,lib=dir.Rpackages)
 
-
-##Setting directories
-##Replace myid with user specific id
-base = "/rdcprojects/tr/tr00612"
-version = "2.0.2"
-prefix="synlbd"
-
-
-inputs=paste(base,"/data/synlbd/",version,sep="")
-mydata=paste(base,"/programs/users/",myid,"/data",sep="")
 
 ##Now, declaring the functions for generating synthetic data
 ##This function is as general as possible
@@ -81,8 +68,8 @@ qr.synth <- function(df,j,labels, bins=50,type="rq",rq.method="fn",stop.val=2,bi
     ##We save the synthesis after each step (when it is still incomplete)
     ##This is because QR might run into singularity issues
     ##Then, all work is not lost!
-    setwd(dir)
-    if(i > 3){vars=fread("tmp.csv")}
+    #setwd(dir)
+    if(i > 3){vars=fread(paste(dir,"tmp.csv",sep="/"))}
     vars=bin.reg(data,vars,part,stop,rq.method,part.endpoints,binary,tmpNames,dir)
     if(is.na(vars)){return(NA)}
     ##Making sure the naming is conssitent
@@ -94,8 +81,8 @@ qr.synth <- function(df,j,labels, bins=50,type="rq",rq.method="fn",stop.val=2,bi
   colnames(vars)=colnames(data)
   vars$sic3=sic
   ##Saving synthetic data 
-  setwd(dir)
-  file_name=paste("QR_SynLBD_",sic,".csv",sep="")
+  #setwd(dir)
+  file_name=paste(dir,"/","QR_SynLBD_",sic,".csv",sep="")
   fwrite(vars,file=file_name,append=FALSE)
   print(sic)
   print(j)
@@ -229,8 +216,8 @@ bin.reg <-function(data,vars,part,stop,rq.method="fn",part.endpoints,binary,tmpN
     var$lastyear=round(var$lastyear)
     var$lastyear = ifelse(var$lastyear<=var$firstyear,var$firstyear+1,var$lastyear)
   }
-  setwd(dir)
-  fwrite(var,"tmp.csv")
+  #setwd(dir)
+  fwrite(var,paste(dir,"tmp.csv",sep="/"))
   return(var)
 }#end of function
 
@@ -249,9 +236,7 @@ data_jitter <- function(data){
 
 
 ##Loading in the synthetic data
-home.dir = paste(here(),"/QuantileRegression/PSD 2018",sep="")
-setwd(home.dir)
-df=fread("longitudinalSynLBD.csv",na.strings="NA",integer64="numeric")
+df=fread(paste(home.dir,"Data","longitudinalSynLBD.csv",sep="/"),na.strings="NA",integer64="numeric")
 
 
 ##Labels of interest
@@ -263,13 +248,13 @@ labels=c(178,239,328,354,473,511,542,703,829,865)
 ##If it does happen, it just reloads the synthesis up until that point and continues on
 for(q in 1:5){
   set.seed(q)
-  dir = paste(home.dir,paste("/Data/QR/QR",q,sep=""),sep="")
+  dir = paste(home.dir,"/Data/QR/QR",q,sep="")
   for(k in 1:10){
     stop.val=2
     while(stop.val<=53){
       syns <- foreach(j=k, .errorhandling="pass",.inorder=FALSE, .packages=c("quantreg","data.table")) %do% {
         return.val=qr.synth(df,j,labels,bins=100,stop.val=stop.val,dir=dir) }#end of for
-        stop.val=ncol(fread("tmp.csv"))+1
+        stop.val=ncol(fread(paste(dir,"tmp.csv",sep="/")))+1
     }
   }
   print(q)

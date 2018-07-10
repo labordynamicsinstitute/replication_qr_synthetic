@@ -2,9 +2,8 @@
 ##PSD 2018 code for "Synthetic data via Quantile Regression for Heavy-Tailed and Heteroskedastic Data"
 ##By Pistner, Slavkovic, and Vilhuber
 
-userID="XXX"
+source("config.R",echo=TRUE)
 
-dir.Rpackages = paste("/home/fs01/",paste(userID,"/Rpackages",sep=""),sep="")
 
 ##Loading the libraries
 ##See https://www2.vrdc.cornell.edu/news/synthetic-data-server/step-4-using-the-sds/ for instructions on how to download R packages
@@ -53,32 +52,25 @@ Cart.synth <- function(df,j,labels,dir){
   
   syns=data.frame(syn(data,method=methods, predictor.matrix=Q)$syn)
   syns$sic3=sic
-  setwd(dir)
-  file_name=paste("CART_SynLBD_",sic,".csv",sep="")
+  #setwd(dir)
+  file_name=paste(dir,"/","CART_SynLBD_",sic,".csv",sep="")
   fwrite(syns,file=file_name,append=FALSE)
   
   return(sic)
   
 }#end of function
 
-##Setting the base directory
-##Note that this assumes inside the PSD 2018 folder there is a Data folder
-##Data folder has a CART folder
-##CART folder has a 5 folders: CART1,...,CART5
-##Each individual synthesis is nested in these folders
-home.dir = paste(here(),"/QuantileRegression/PSD 2018",sep="")
-setwd(home.dir)
-df=fread("longitudinalSynLBD.csv",na.strings="NA",integer64="numeric")
-
-
 ##Labels of interest
 labels=c(178,239,328,354,473,511,542,703,829,865)
 
+## Load the SynLBD data
+
+df=fread(paste(home.dir,"Data","longitudinalSynLBD.csv",sep="/"),na.strings="NA",integer64="numeric")
 
 ##Synthesizing 5 times over each of the labels specified above.
 set.seed(2018)
 for(q in 1:5){
-  dir = paste(home.dir,paste("/Data/CART/CART",q,sep=""),sep="")
+  dir = paste(home.dir,"/Data/CART/CART",q,sep="")
   sics_run <- foreach(j=c(1:length(labels)), .errorhandling="remove", .inorder=FALSE) %do%{
     Cart.synth(df,j,labels,dir)
   }#end of for
