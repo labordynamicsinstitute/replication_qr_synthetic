@@ -11,14 +11,12 @@ library(foreign)
 library(MatrixModels,lib=dir.Rpackages)
 library(SparseM,lib=dir.Rpackages)
 library(quantreg,lib=dir.Rpackages)
-library(stringr,lib=dir.Rpackages)
 library("data.table",lib=dir.Rpackages)
 library(doParallel, lib=dir.Rpackages)
 library("rpart",lib=dir.Rpackages)
 library("ggplot2",lib=dir.Rpackages)
-library("here",lib=dir.Rpackages)
 library(foreach,lib=dir.Rpackages)
-library(doParallel,lib=dir.Rpackages)
+
 
 
 ##Now, declaring the functions for generating synthetic data

@@ -10,7 +10,7 @@ source("config.R",echo=TRUE)
 
 library("synthpop",lib=dir.Rpackages)
 library("data.table",lib=dir.Rpackages)
-library("here",lib=dir.Rpackages)
+library("doParallel",lib=dir.Rpackages)
 
 ##Function to generate a synthetic data
 ##Basically just a wrapper to the R package synthpop
