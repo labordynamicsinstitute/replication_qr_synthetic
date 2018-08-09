@@ -26,5 +26,8 @@ install.packages("rpart",lib=dir.Rpackages)
 install.packages("sdcMicro",lib=dir.Rpackages)
 install.packages("data.table",lib=dir.Rpackages)
 install.packages("dbscan",lib=dir.Rpackages)
-
+install.packages("here",lib=dir.Rpackages)
+install.packages("synthpop",lib=dir.Rpackages)
+install.packages("ggplot2",lib=dir.Rpackages)
+install.packages("foreach",lib=dir.Rpackages)
 
