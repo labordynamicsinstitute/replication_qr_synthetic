@@ -1,0 +1,15 @@
+#!/bin/bash -l
+#PBS -l ncpus=4
+#PBS -l walltime=24:00:00
+#PBS -N synLBD
+#PBS -m aeb
+
+source /etc/profile.d/modules.sh
+cd $PBS_O_WORKDIR
+module load R/3.0.2
+R --vanilla <01_install.R> 01_install.Rout
+R --vanilla < 02_fileMerge.R > 02_fileMerge.Rout
+R --vanilla <03_a_synLBD_CART.R> 03_a_synLBD_CART.Rout
+R --vanilla <03_b_synLBD_QR.R> 03_b_synLBD_QR.Rout
+R --vanilla <04_SynLBD_utilityAndRisk.R> 04_SynLBD_utilityAndRisk.Rout
+
