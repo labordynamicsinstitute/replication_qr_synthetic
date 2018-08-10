@@ -43,9 +43,12 @@ qsub 04_SynLBD_utilityAndRisk.qsub
 ```
 
 ### Step 5
-Create graphics
+Create graphics:
 
-TODO.
+```
+qsub 05_synLBD_graphs.qsub
+```
+
 
 ## Funding
 The Synthetic LBD data were accessed through the Synthetic Data Server at Cornell University, which is funded through NSF Grant SES-1042181 and BCS-0941226 and a grant from the Alfred P. Sloan foundation.
