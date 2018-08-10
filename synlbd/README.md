@@ -49,6 +49,7 @@ Create graphics:
 qsub 05_synLBD_graphs.qsub
 ```
 
+Note that there are slight discrepancies in these graphs versus the orginal graphs presented in the paper. The graphs reported in the paper came from an earlier version of the code before a random seed has been set. This has since been corrected.
 
 ## Funding
 The Synthetic LBD data were accessed through the Synthetic Data Server at Cornell University, which is funded through NSF Grant SES-1042181 and BCS-0941226 and a grant from the Alfred P. Sloan foundation.
