@@ -10,4 +10,6 @@ Data for this application was obtained from the [i-CeM project](https://www1.ess
 
 ## Code
 
+All code is contained in the file `censusCode.R`. This code assumes that the data set is saved in  a `data` folder. It outputs two separate items into a `results` folder. This includes both a file containing the utility and  risk measures and a graph correpsonding to the  graph presented in  the paper.
+
 Note that there are slight discrepancies in these graphs versus the orginal graphs presented in the paper. The graphs reported in the paper came from an earlier version of the code before a random seed has been set. This has since been corrected.
